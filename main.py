@@ -23,15 +23,12 @@ def proba_to_graph(proba):
 ##       Fenetre du texte          ##
 #####################################
 
-download = False
-finished = False
+download = False # on fait des sauvegardes pour le download
+finished = False # on fait des sauvegardes pour le finished
 def texte(nom_musique,lien_dl,parole,text,X,Y):
     global titre_chanson , download , finished
     
     titre_chanson = nom_musique
-        
-    t = threading.Thread(target=lien_dl.start)
-
     
     d = {}
     
@@ -62,6 +59,7 @@ def texte(nom_musique,lien_dl,parole,text,X,Y):
                 img_dl = pg.img("IMG/ok.png",840,47.5,60,60)
                 download = False
                 finished = True
+                
         screen.fill((223, 242, 255))
         
         text.blit(screen)
@@ -86,12 +84,13 @@ def texte(nom_musique,lien_dl,parole,text,X,Y):
             if not download:
                 if not finished:
                     if img_dl.click(pygame.mouse.get_pos(),event):
-                        t.start()
+                        threading.Thread(target=lien_dl.start).start()
                         img_dl = pg.img("IMG/chargement.png",840,47.5,60,60)
                         download = True
                     
             if img_stat.click(pygame.mouse.get_pos(),event):
                 graphique(myclass.champ_lexical(parole).compter())
+                
             if img_cherch.click(pygame.mouse.get_pos(),event):
                 debut()
                 
@@ -165,7 +164,6 @@ def graphique(d):
 #####################################
 
 
-
 def debut():
     pygame.init()
     
@@ -214,6 +212,11 @@ def debut():
 #####################################
 
 def charger(nom_musique):
+    """[fontion qui est appeler par un thread et qui permet de charger tout les trucs un peu long a faire]
+
+    Args:
+        nom_musique (str): [ le nom de la musique que l'on traite ]
+    """
     global cond_fin_chargement,lien_dl,parole,text,X,Y,titre
     
     titre = nom_musique
@@ -224,8 +227,6 @@ def charger(nom_musique):
     font = pygame.font.Font('freesansbold.ttf', 14)
     text = pg.textealign(parole,font,(X,Y),(0,0,0),"center", 1)
     cond_fin_chargement = True
-    
-    
     
     
 def chargement():
@@ -264,8 +265,8 @@ def chargement():
 #####################################
 ##              main               ##
 #####################################
-# if __main__ == "__"
-debut()
+if __name__ == "__main__":
+    debut()
 
 
 

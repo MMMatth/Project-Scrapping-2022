@@ -1,6 +1,7 @@
 import pygame
 import sys
 
+# class très utile pour pygame
 
 class game:
     """Class qui gere la fenetre """
