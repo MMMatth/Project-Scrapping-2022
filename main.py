@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 import pygame
 import sys
 from googlesearch import search
-import bs4 as bs
 import threading
 import myclass
 import myclasspg as pg
