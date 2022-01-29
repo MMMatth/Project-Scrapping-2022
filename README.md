@@ -3,7 +3,7 @@ projet de scrapping qui permet de chercher les paroles d'une musique
 ainsi que de la télécharger ainsi que de la parcourir pour faire un 
 graph de stat avec les champs lexicaux
 
-# Bibliothèque à téléchargeré:
+# Bibliothèque à téléchargerer:
 pip install pygame
 pip install googlesearch-python
 pip install bs4
