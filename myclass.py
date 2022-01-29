@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
-import pygame
 from googlesearch import search
 import bs4 as bs
 import urllib.request
 from http.cookiejar import CookieJar
 import pyttsx3
 import youtube_dl
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 #####################################
 ##         Class speak             ##
