@@ -9,15 +9,17 @@ import myclasspg as pg
 
 def proba_to_graph(proba):
     if 25 > proba >= 0:
-        return  "0.png"
+        return  "IMG/graph/0.png"
     if 50 > proba >= 25:
-        return  "1.png"
+        return  "IMG/graph/1.png"
     if 75 > proba >= 50:
-        return "2.png"
+        return "IMG/graph/2.png"
     if 100 > proba >= 75:
-        return "3.png"
+        return "IMG/graph/3.png"
     else:
         pass
+    
+    
 #####################################
 ##       Fenetre du texte          ##
 #####################################
@@ -108,9 +110,11 @@ def texte(nom_musique,lien_dl,parole,text,X,Y):
       
         pygame.display.update()
 
+
 #####################################
 ##       Fenetre du graphique      ##
 #####################################
+    
     
 def graphique(d):
     global titre_chanson
@@ -132,13 +136,13 @@ def graphique(d):
     path_img3 = proba_to_graph(p_joie)
 
     img_quit = pg.bouton("IMG/quit.png",840, 60,50,50)
-    
+
     while True:
                 
         screen.fill((223, 242, 255))
-        pg.img("IMG/graph/"+path_img1,110,110,130,130).iblit(screen)
-        pg.img("IMG/graph/"+path_img2,110,250,130,130).iblit(screen)
-        pg.img("IMG/graph/"+path_img3,110,390,130,130).iblit(screen)
+        pg.img(path_img1,110,110,130,130).iblit(screen)
+        pg.img(path_img2,110,250,130,130).iblit(screen)
+        pg.img(path_img3,110,390,130,130).iblit(screen)
         img_quit.iblit(screen)
         
 
@@ -157,6 +161,7 @@ def graphique(d):
                 
         pygame.display.update()
         clock.tick(60)
+
 
 #####################################
 ##       Fenetre du debut          ##
@@ -210,6 +215,7 @@ def debut():
 ##          chargement             ##
 #####################################
 
+
 def charger(nom_musique):
     """[fontion qui est appeler par un thread et qui permet de charger tout les trucs un peu long a faire]
 
@@ -261,9 +267,12 @@ def chargement():
         pygame.display.flip()
         clock.tick(60)
 
+
 #####################################
 ##              main               ##
 #####################################
+
+
 if __name__ == "__main__":
     debut()
 
