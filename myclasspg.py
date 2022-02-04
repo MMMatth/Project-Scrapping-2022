@@ -226,16 +226,16 @@ class zone_ecriture:
         
     def supr(self):
         """[Methode permettant de surprimer une lettre au texte]"""
-        self.nom = self.nom[:-1]
+        self.nom = self.nom[:-1] # on surprime le dernier caractère
         
     def add(self,event):
         """[Methode permettant d'ajouter une lettre au texte]"""
-        if len(self.nom) < self.limite_caractere:
-            self.nom += event.unicode
+        if len(self.nom) < self.limite_caractere: # si on dépasse pas la limite
+            self.nom += event.unicode # on ajoute le texte
             
     def recuperer(self):
         """[Methode qui renvoie le texet]"""
-        return self.nom
+        return self.nom # on recupère le texte
 
 
 class bouton:

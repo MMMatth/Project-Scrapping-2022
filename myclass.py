@@ -230,7 +230,7 @@ class champ_lexical:
             parole (str): [Les paroles prise en compte]
         """
         self.parole = parole
-        
+        # les champs lexicaux suivant on été générer grace a multi_cherch mais on été mit directement pour eviter des chargements
         self.champ_lexical = {}
         self.champ_lexical["Champ_lexical_amour"] = ['fiançailles', 'fiancé', 'parenté', 'illégitime', 'indissoluble', 'polygame', 'civil', 'descendance', 'lien', 'ban', 'épithalame', 'légal', 'promesse', 'fête', "mariage d'inclination", 'enfant naturel', 'métissage', 'unir', 'formariage', 'célébration du mariage', 'fusion', 'mariable', 'vi', 'chérir', 'désirer', 'amateur', 'faire cas', 'haïr', 'vénérer', 'inclination', 'venir', 'intéresser', 'follement', 'réjouissez', 'Capulet', 'franc-parler', 'parlaient', 'toutou', 'manier', 'choyer', 'aimanter', 'amoureusement', 'avoir le bé', 'captiver', 'en pincer pour', 'être attaché à', 'étudiez', 'gober', 'niquer', 'réclamer', 'se complaire', "s'enflammer", 'viandard', 'âme', 'arrivais', 'avoir martel en tête', 'bichette', 'cagnarder', "ch't'aime", 'contre-aimer', 'danseur', 'donnes', 'épistémophilie', 'feindre', 'fromage', 'germanophobe', 'homard', 'jalouse', 'ludomane', 'mémère', 'narcissisation', 'opéra', 'Philadelphe', 'radical', 'renvoyer', 'se ronger les ongles', 'sorteux', "tape-à-l'œi"]
         self.champ_lexical["Champ_lexical_rap"] = ["noir","couteau","plaie",'infanticide', 'témoin', 'fratricide', 'trahison', 'violence', 'commandité', 'Caïn', 'enquêter', 'effraction', 'amant', 'détective', 'apologie', 'acquittement', 'non coupable', 'Œdipe', 'avoué', 'génocide', 'meutrière', 'venge', 'flow', 'MC Solaar', 'chanson', 'rap français', 'Nekfeu', 'Afrika Bambaataa', 'Suprême NTM', 'échantillonneur', 'eurodance', 'Pat', 'Straight Outta Compto', 'homosexuel', 'asexué', 'transsexualisme', 'attirance', 'génital', 'protégé', 'différences', 'féminité', 'fœtus', 'différent', 'âge', 'rapport', 'mec', 'partenariat', 'chasteté', 'inversion', 'trans', 'pyramide des âges', 'masturber', 'parties génitales', 'baise', 'désexualiser', 'genre sexuel', 'monosexualité', 'pénétrer', 'sexualise', 'dope', 'ecstasy', 'substance', 'désintoxication', 'hippie', 'récréative', 'illicite', 'hallucinogène', 'décoction', 'criminalité', 'coke', 'orviétan', 'chnouf', 'déchiré', 'flip', 'kat', 'narco-État', 'potion', 'shoot', 'trippe']
@@ -286,51 +286,15 @@ class champ_lexical:
         """[Méthode qui permet de conter le nombre de fois chaque thème apparait dans la musique]"""
         tmp = 0
         for i in range(len(self.champ_lexical["Champ_lexical_amour"])):
-            self.comteur["conteur_amour"] += self.boyer_moore(self.parole,self.champ_lexical["Champ_lexical_amour"][i]) 
-            tmp += self.boyer_moore(self.parole,self.champ_lexical["Champ_lexical_amour"][i])        
+            self.comteur["conteur_amour"] += self.boyer_moore(self.parole,self.champ_lexical["Champ_lexical_amour"][i])  # on compte le nombre de fois qu'il y'a le champ lexical
+            tmp += self.boyer_moore(self.parole,self.champ_lexical["Champ_lexical_amour"][i]) # on calcule de chiffre de tout les mot de tout les champs lexicaux qui sont dans les paroles
         for i in range(len(self.champ_lexical["Champ_lexical_rap"])):
             self.comteur["conteur_rap"] += self.boyer_moore(self.parole,self.champ_lexical["Champ_lexical_rap"][i]) 
             tmp += self.boyer_moore(self.parole,self.champ_lexical["Champ_lexical_rap"][i]) 
         for i in range(len(self.champ_lexical["Champ_lexical_joie"])):
             self.comteur["conteur_joie"] += self.boyer_moore(self.parole,self.champ_lexical["Champ_lexical_joie"][i]) 
             tmp += self.boyer_moore(self.parole,self.champ_lexical["Champ_lexical_joie"][i])
-        self.comteur["conteur_amour"] = self.comteur["conteur_amour"]/tmp
-        self.comteur["conteur_rap"] = self.comteur["conteur_rap"]/tmp
-        self.comteur["conteur_joie"] = self.comteur["conteur_joie"]/tmp
+        self.comteur["conteur_amour"] = self.comteur["conteur_amour"]/tmp # on fait les proba
+        self.comteur["conteur_rap"] = self.comteur["conteur_rap"]/tmp # on fait les proba
+        self.comteur["conteur_joie"] = self.comteur["conteur_joie"]/tmp # on fait les proba
         return(self.comteur)
-    
-
-
-# print(chercher("Champ lexical amour",10,"https://rimessolides.com").toute_balise("div","motcle"))
-
-
-
-# {'conteur_amour': 0.8181818181818182, 'conteur_rap': 0.18181818181818182, 'conteur_joie': 0.0}   
-# ["0","1","2","3"]
-# class def_graph:
-#     def __init__(self,proba):
-#         self.proba = proba
-#         self.path = [0,0,0]
-        
-            
-#     def return_pourcentage(self):
-#         for i in self.proba.keys():
-#             self.proba[i] = round(self.proba[i]*100,1)
-#         return self.proba
-    
-#     def return_path_img(self):
-#         for j in (0,2):
-#             for i in (0,2):
-#                 print(self.proba[j])
-#                 if 0.25 > self.proba[j] >= 0.0:
-#                     self.path[i] =  "IMG/graph/0.png"
-#                 elif 0.50 > self.proba[j] >= 0.25:
-#                     self.path[i] =  "IMG/graph/1.png"
-#                 elif 0.75 > self.proba[j] >= 0.50:
-#                     self.path[i] = "IMG/graph/2.png"
-#                 elif 0.100 > self.proba[j] >= 0.75:
-#                     self.path[i] = "IMG/graph/3.png"
-#         return self.path
-
-
-# print(def_graph({'conteur_amour': 0.8181818181818182, 'conteur_rap': 0.18181818181818182, 'conteur_joie': 0.0},).return_path_img())

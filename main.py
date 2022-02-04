@@ -56,9 +56,9 @@ def texte(nom_musique,lien_dl,parole,text,X,Y):
     
     while True:
         if download:
-            if lien_dl.return_satus() == "finished":
-                img_dl = pg.img("IMG/ok.png",840,47.5,60,60)
-                download = False
+            if lien_dl.return_satus() == "finished": # si le téléchargement est fini
+                img_dl = pg.img("IMG/ok.png",840,47.5,60,60) # on met un image comme quoi c'est fini
+                download = False # on télécharge plus
                 finished = True
                 
         screen.fill((223, 242, 255))
@@ -66,7 +66,7 @@ def texte(nom_musique,lien_dl,parole,text,X,Y):
         text.blit(screen)
             
         if download:
-            img_dl.rotate_iblit(screen,1)
+            img_dl.rotate_iblit(screen,1) # si on télécharge on met un image qui tourne sur elle meme
         else : 
             img_dl.iblit(screen)
         
@@ -82,15 +82,15 @@ def texte(nom_musique,lien_dl,parole,text,X,Y):
                 d[event.key] = True
             if event.type == pygame.KEYUP:
                 d[event.key] = False
-            if not download:
-                if not finished:
-                    if img_dl.click(pygame.mouse.get_pos(),event):
-                        threading.Thread(target=lien_dl.start).start()
-                        img_dl = pg.img("IMG/chargement.png",840,47.5,60,60)
-                        download = True
+            if not download: # si on télécharge pas
+                if not finished: #  si on a pas fini de dl
+                    if img_dl.click(pygame.mouse.get_pos(),event): # on peut cliquer sur le logo téléchargement
+                        threading.Thread(target=lien_dl.start).start() # on lance un thread en parallèle qui lance le téléchargement
+                        img_dl = pg.img("IMG/chargement.png",840,47.5,60,60) # on met l'image de chargment
+                        download = True # on dit qu'on télécharge
                     
-            if img_stat.click(pygame.mouse.get_pos(),event):
-                graphique(myclass.champ_lexical(parole).compter())
+            if img_stat.click(pygame.mouse.get_pos(),event): # si on click sur le graph
+                graphique(myclass.champ_lexical(parole).compter()) # on appelle la f graphique
                 
             if img_cherch.click(pygame.mouse.get_pos(),event):
                 debut()
@@ -103,7 +103,7 @@ def texte(nom_musique,lien_dl,parole,text,X,Y):
             text.update((X,Y))
             
         if d.get(pygame.K_DOWN):  # Si on baisse
-            if Y > -1000:
+            if Y > -1000: # on block pour pas déscendre trop bas
                 Y -= 4
             X = X
             text.update((X,Y))
@@ -127,8 +127,8 @@ def graphique(d):
     
     screen = pygame.display.set_mode([900, 500])# it will display on screen
     
-    p_amour = round(d["conteur_amour"]*100,1)
-    p_rap = round(d["conteur_rap"]*100,1)
+    p_amour = round(d["conteur_amour"]*100,1) # on fait le proba
+    p_rap = round(d["conteur_rap"]*100,1) # round pour arondir
     p_joie = round(d["conteur_joie"]*100,1)
 
     path_img1 = proba_to_graph(p_amour)
@@ -146,9 +146,9 @@ def graphique(d):
         img_quit.iblit(screen)
         
 
-        pg.text(str(p_amour)+" % d'amour",110+130+10,110-65,"autre",color = (0,0,0), size = 70).iblit(screen)
-        pg.text(str(p_rap)+" % sombre",110+130+10,250-65,"autre",color = (0,0,0), size = 70).iblit(screen)
-        pg.text(str(p_joie)+" % joie",110+130+10,390-65,"autre",color = (0,0,0), size = 70).iblit(screen)
+        pg.text(str(p_amour)+" % d'amour",110+130+10,110-65,"autre",color = (0,0,0), size = 70).iblit(screen) # on affiche les texts
+        pg.text(str(p_rap)+" % sombre",110+130+10,250-65,"autre",color = (0,0,0), size = 70).iblit(screen) # on affiche les texts
+        pg.text(str(p_joie)+" % joie",110+130+10,390-65,"autre",color = (0,0,0), size = 70).iblit(screen) # on affiche les texts
         
         
         for event in pygame.event.get():
@@ -180,7 +180,7 @@ def debut():
     
     screen = pygame.display.set_mode([900, 500])
         
-    rect = pg.zone_ecriture(200,200, 500, 32,30, "lightskyblue3",color_t = "white")
+    rect = pg.zone_ecriture(200,200, 500, 32,30, "lightskyblue3",color_t = "white") # on crée notre zone d'écriture
     
     nom_musique = ""
     
@@ -196,14 +196,13 @@ def debut():
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
-                    rect.supr()
+                    rect.supr() # on suprime dans la zone de texte
                     
                 elif event.key == pygame.K_RETURN:
-                    nom_musique = rect.recuperer()
-                    threading.Thread(target=charger, args=(nom_musique,)).start()
-                    chargement()
+                    threading.Thread(target=charger, args=(rect.nom,)).start() # on démare la fonction qui charge les trucs compliquer
+                    chargement() # on démarre le chargement
                 else:
-                    rect.add(event)
+                    rect.add(event) # on ajoute le texte a la zone de texte
         
 
         
@@ -226,12 +225,12 @@ def charger(nom_musique):
     
     titre = nom_musique
     X , Y = 450 , 10
-    lien_yt = myclass.chercher(nom_musique,10,"youtube.com").lien()
-    lien_dl = myclass.dl_musique(lien_yt,"mp3")
-    parole = myclass.chercher(nom_musique,10,"paroles.net").une_balise("div","song-text")
-    font = pygame.font.Font('freesansbold.ttf', 14)
-    text = pg.textealign(parole,font,(X,Y),(0,0,0),"center", 1)
-    cond_fin_chargement = True
+    lien_yt = myclass.chercher(nom_musique,10,"youtube.com").lien() # on fait la recherche du lien youtube
+    lien_dl = myclass.dl_musique(lien_yt,"mp3") # prepare le téléchargement
+    parole = myclass.chercher(nom_musique,10,"paroles.net").une_balise("div","song-text") # on cherche les paroles de la chanson
+    font = pygame.font.Font('freesansbold.ttf', 14) 
+    text = pg.textealign(parole,font,(X,Y),(0,0,0),"center", 1) # on crée le texte en texte pygame 
+    cond_fin_chargement = True # on a fini de charger
     
     
 def chargement():
@@ -251,7 +250,7 @@ def chargement():
     t_chargement = pg.text("Chargement",410,200,"center",size = 32)
 
     while True:
-        if cond_fin_chargement:
+        if cond_fin_chargement: # quand on a fini de charger on lance texte
             texte(titre,lien_dl,parole,text,X , Y) 
         screen.fill((223, 242, 255))
         
