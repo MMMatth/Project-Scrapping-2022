@@ -1,9 +1,11 @@
 # Nim game
-> Description of the img
+> Search a music and see the lyrics
 
 <p align = "center">
   <img src="IMG/gif.gif" width = 75% >
 </p>
+
+> Dowload the music
 <p align = "center">
   <img src="IMG/gif2.gif" width = 75% >
 </p>
